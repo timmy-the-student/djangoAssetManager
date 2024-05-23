@@ -1,0 +1,153 @@
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    overflow: scroll;
+}
+
+.navbar {
+    background-color: #48354f;
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.navbar a {
+    float: right;
+    color: #d696e2;
+    text-align: center;
+    padding: 16px 16px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.navbar a.button:hover {
+    background-color: #b99ac7;
+    color: #221f27;
+}
+
+.navbar a.title {
+    font-weight: bold;
+    float: left;
+    color: #d696e2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 23px;
+}
+
+.navbar a.active {
+    background-color: #9e46a8;
+    color: white;
+}
+
+.navbar input {
+    float: right;
+    cursor: pointer;
+    background-color: #48354f;
+    border: none;
+    color: #d696e2;
+    text-align: center;
+    padding: 16px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.navbar input[type="submit"].btn:hover {
+    background-color: #b99ac7;
+    color: #221f27;
+}
+
+.navbar img {
+    width: 44px;
+    border-radius: 50%;
+    float: right;
+    padding: 5px 5px;
+}
+
+.assetChanges {
+    background: rgba(232, 149, 225, 0.6);
+    backdrop-filter: blur(4px);
+    position: sticky;
+    top: 60px;
+    z-index: 2;
+    padding: 10px 10px;
+    border-radius: 10px;
+    box-shadow:0 4px 30px rgba(0,0,0,0.1);
+    border: 1px solid rgba(250, 150, 245, 0.4)
+}
+
+#wrapper {
+    display:block;
+    overflow:hidden;
+    z-index: 1;
+}
+
+.asset {
+    float:left;
+    cursor: pointer;
+    overflow: hidden;
+    background-image: linear-gradient(#dfc8e6, #d4c5d9);
+    border-radius: 8px;
+    inline-size: initial;
+    width:min-content;
+    padding: 10px 10px;
+    opacity: 1;
+    box-shadow: none;
+}
+
+.asset:hover {
+    opacity: 0.7;
+}
+
+.asset div.assetText {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.asset div.assetText span.Name{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.asset img {
+    object-fit: cover;
+}
+
+input[type="checkbox"].assetCheckboxes {
+    display: none;
+}
+
+#file1 {
+    display: none;
+}
+
+#uploadSpot {
+    background: rgba(232, 149, 225, 0.6);
+    backdrop-filter: blur(4px);
+    margin: auto;
+    z-index: 2;
+    padding: 10px 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+    border: 1px solid rgba(250, 150, 245, 0.4);
+    width: 300px;
+    height: 300px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.submitButton {
+    background: rgba(250, 229, 245, 0.6);
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    z-index: 3;
+    padding: 10px 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+    border: 1px solid rgba(250, 150, 245, 0.4);
+}
+
+.submitButton:hover {
+    background: rgba(255, 239, 250, 0.7);
+}

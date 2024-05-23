@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+{% load socialaccount %}
+{% load static %}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Dickson Asset Manager - Upload Data</title>
+
+    <link rel="stylesheet" href="{% static 'DarkMode.css' %}?v=48" />
+    <link rel="icon" href="https://www.dicksonc.act.edu.au/__data/assets/file/0014/443102/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="navbar">
+        <a class="title"> Asset Manager </a>
+
+        {% if user.is_authenticated %}
+        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+
+        <form action="{% url 'account_logout' %}" method="POST">
+            {% csrf_token %}
+            <input class="btn" type="submit" value="Sign out" />
+        </form>
+
+        {% if user.is_staff %}
+        <a href="/admin/" class="button">Admin</a>
+        {% endif %}
+        <a href="/upload" class="active">Upload data</a>
+        <a href="/home" class="button">Assets</a>
+
+
+        {% else %}
+
+        <form action="{% provider_login_url 'google' %}" method="POST">
+            {% csrf_token %}
+            <input class="btn" type="submit" value="Sign in with Google" />
+        </form>
+        <a href="/upload" class="active">Upload data</a>
+        <a href="/home" class="button">Assets</a>
+
+        {% endif %}
+
+    </div>
+    
+    <div id="uploadSpot">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="file1"> Upload a file</label><br />
+            <input type="file" id="file1" name="file"><br />
+            <small>Only accepts CSV files</small> <br />
+            <br />
+            <button type="submit" class="submitButton">Upload</button>
+        </form>
+    </div>
+
+</body>
+</html>

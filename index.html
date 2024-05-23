@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+{% load socialaccount %}
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <title>Dickson Asset Manager</title>
+
+    <link rel="stylesheet" href="{% static 'DarkMode.css' %}?v=53" />
+    <link rel="icon" href="https://www.dicksonc.act.edu.au/__data/assets/file/0014/443102/favicon.ico" type="image/x-icon">
+
+    <script type="text/javaScript">
+
+        function ResizeAssets()
+        {
+            let wrapper = document.getElementById('wrapper');
+            var screenWidth = wrapper.getBoundingClientRect().width;
+
+            var horizontalAssetCount = Math.round(screenWidth / 200);
+            console.log(horizontalAssetCount);
+            var assetWidth = Math.floor(screenWidth / horizontalAssetCount);
+
+            var error = screenWidth - horizontalAssetCount * assetWidth;
+
+            const assets = document.getElementsByClassName("asset");
+
+            const images = document.getElementsByClassName("assetImage");
+
+            const text = document.getElementsByClassName("assetText");
+
+            for (let i = 0; i < assets.length; i++) {
+
+                assets[i].height = Math.round(assetWidth * 2);
+
+                text[i].setAttribute("style", "display:block; width:" + String(assetWidth - 20) + "px");
+
+                if ((i % horizontalAssetCount) < error - 1) {
+                    images[i].width = assetWidth - 19;
+                } else {
+                    images[i].width = assetWidth - 20;
+                }
+
+                images[i].height = assetWidth - 20;
+
+            }
+        }
+
+        function selectAsset(Id)
+        {
+            checkboxID = Id + "Checkbox";
+            document.getElementById(checkboxID).click();
+            if (document.getElementById(checkboxID).checked) {
+                document.getElementById(Id).style.boxShadow = "inset 0 0 60px #e0ffe0";
+            } else {
+                document.getElementById(Id).style.boxShadow = "none";
+            }
+        }
+    </script>
+</head>
+
+<body onresize="JavaScript:ResizeAssets();" onload="JavaScript:ResizeAssets();">
+
+    <div class="navbar">
+        <a class="title"> Asset Manager </a>
+
+        {% if user.is_authenticated %}
+        <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" />
+
+        <form action="{% url 'account_logout' %}" method="POST">
+            {% csrf_token %}
+            <input class="btn" type="submit" value="Sign out" />
+        </form>
+
+        {% if user.is_staff %}
+        <a href="/admin/" class="button">Admin</a>
+        <a href="/upload" class="button">Upload data</a>
+        {% endif %}
+        <a href="/home" class="active">Assets</a>
+
+
+        {% else %}
+
+        <form action="{% provider_login_url 'google' %}" method="POST">
+            {% csrf_token %}
+            <input class="btn" type="submit" value="Sign in with Google" />
+        </form>
+
+        <a href="/home" class="button">Assets</a>
+
+        {% endif %}
+
+    </div>
+
+    {% if user.is_authenticated %}
+    <form action="" method="POST"  enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for assets in content %}
+        <input name="{{assets.id}}" class="assetCheckboxes" id="{{assets.id}}AssetCheckbox" type="checkbox" />
+        {% endfor %}
+
+        <div class="assetChanges">
+            {{assetForm}}
+            <button type="submit" class="submitButton">Update</button>
+        </div>
+
+        
+
+        {% if content %}
+        <div id="wrapper">
+            {% for assets in content %}
+
+            <div id="{{assets.id}}Asset" class="asset" onclick="selectAsset(this.id)">
+
+                <img class="assetImage" src="{{assets.Image.url}}"><br />
+
+                <div class="assetText">
+                    <span class="Name">{{assets.Name}}</span><br />
+                    <span class="Area">{{assets.Area}}</span><br />
+                    <span class="Location">{{assets.Location}}</span><br />
+                    <span class="Time"><small>{{assets.LastUpdated}}</small></span>
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+        <strong>No assets found</strong>
+        {% endif %}
+
+    </form>
+    {% endif %}
+
+</body>
+</html>
